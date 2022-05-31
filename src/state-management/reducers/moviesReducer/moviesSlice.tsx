@@ -6,10 +6,10 @@ export const getPosts = createAsyncThunk('posts/getPosts', async () => {
   return result;
 });
 import {InitialState} from './../../../types/items';
-import {Post} from './../../../types/items';
+import {Posts} from './../../../types/items';
 const IiitialState: InitialState = {
-  loading: false,
-  posts: Posts,
+  loading: false
+  
 };
 
 const postSlice = createSlice({

@@ -21,7 +21,6 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {},
-  //comment
   extraReducers: {
     [getSearchResult.pending.toString()]: state => {
       state.error = false;

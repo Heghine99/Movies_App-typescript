@@ -26,12 +26,12 @@ import DropDownSearch from '../../components/dropDownSearch/dropDownSEarch';
 import {Categories} from './../../types/items';
 import API_URL from '../../configs/configs';
 
-interface Home {
+interface home {
   text: string;
   state: [];
 }
 
-const Home = () => {
+const Home: FC<home> = () => {
   console.log(API_URL.API_URL);
   const {results} = useSelector((state: any) => state.moviesSlice.posts);
   const searchResults = useSelector(

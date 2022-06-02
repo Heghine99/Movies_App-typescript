@@ -9,7 +9,7 @@ import Loading from '../globalComponents/Loading/loading';
 
 export default function DroppDownSearch({searchResult, navigation}) {
   //const [ref, setRef] = useState(null);
-  const likedList = useSelector<number[]>(state => state.moviesSlice.likedList);
+  const likedList = useSelector(state => state.moviesSlice.likedList);
   const loading = useSelector(state => state.searchSlice.loading);
   const RenderItem = ({item}) => {
     return (

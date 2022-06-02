@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {getPosts} from '../../state-management/reducers/moviesReducer/moviesSlice';
 import categoriesIcons from './categoriesIconHome';
 import Loading from '../../components/globalComponents/Loading/loading';
@@ -19,34 +18,33 @@ import colors from './../../assets/colors/colors';
 const profile = require('./../../assets/images/ProfileImage.jpg');
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import DropDownSearch from '../../components/dropDownSearch/dropDownSEarch';
+// import DropDownSearch from '../../components/dropDownSearch/dropDownSEarch';
 // import FlatListMovies from '../../components/globalComponents/FlatListComponent/FlatListMovies';
 // import {DarkModeContext} from '../../components/Context/context';
 // import {darkModeStyles} from '../../components/globalComponents/DarkModeStyle/profileDarkModeStyles';
 import {Categories} from './../../types/items';
-import API_URL from '../../configs/configs';
 
-interface home {
-  text: string;
-  state: [];
-}
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
 
-const Home: FC<home> = () => {
-  const {results} = useSelector((state: any) => state.moviesSlice.posts);
-  const searchResults = useSelector(
-    state => state.searchSlice.searchResult.results,
-  );
-  // const loading = useSelector(state => state.moviesSlice.loading);
-  const dispatch = useDispatch();
+const Home = () => {
   // const screenIndex = navigation.getState().index;
   // const {mode} = useContext(DarkModeContext);
-
+  const results = useAppSelector(state => state.moviesSlice.posts);
+  const searchResults = useAppSelector(
+    state => state.searchSlice.searchResult.results,
+  );
+  const loading = useAppSelector(state => state.moviesSlice.loading);
+  const dispatch = useAppDispatch();
+  console.log(results);
+  console.log(loading);
+  console.log(searchResults);
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
 
-  const [searchResult, setSearchResult] = useState<string[]>([]);
+  //const [searchResult, setSearchResult] = useState<string[]>([]);
   const [searching, setSearching] = useState<boolean>(false);
+  console.log(searching);
 
   const renderCategoriesItem = ({item}: {item: Categories}) => {
     return (
@@ -64,19 +62,19 @@ const Home: FC<home> = () => {
     );
   };
 
-  const handleChangeInput = (text: Home) => {
+  const handleChangeInput = (text: string | number) => {
     setSearching(true);
     if (text) {
-      dispatch(getSearchResult(text));
+      dispatch(getSearchResult());
     } else {
       setSearching(false);
-      dispatch(getSearchResult(''));
+      dispatch(getSearchResult());
     }
   };
 
   return (
     <View>
-      {Loading ? (
+      {loading ? (
         <Loading size={100} />
       ) : (
         <ScrollView>
@@ -94,7 +92,6 @@ const Home: FC<home> = () => {
               </TouchableOpacity>
             </View>
           </SafeAreaView>
-
           {/* Search */}
           <View style={styles.searchMovie}>
             <View style={styles.searchMovieInput}>
@@ -106,12 +103,12 @@ const Home: FC<home> = () => {
                 defaultValue={''}
               />
             </View>
-            {searchResult && searching && (
+            {/* {searchResult && searching && (
               <DropDownSearch
-                searchResult={searchResults}
-                // navigation={navigation}
+                searchResult={searchResults} */}
+            {/* navigation={navigation}
               />
-            )}
+            )}  */}
           </View>
 
           {/* Categories */}
@@ -138,13 +135,12 @@ const Home: FC<home> = () => {
           </View>
 
           {/* New Moview */}
-
           {/* <FlatListMovies
-          navigation={navigation}
-          results={results}
-          // screenIndex={screenIndex}
-          screenName="Home"
-        /> */}
+            // navigation={navigation}
+            results={results}
+            // screenIndex={screenIndex}
+            screenName="Home"
+          /> */}
         </ScrollView>
       )}
     </View>

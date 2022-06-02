@@ -2,6 +2,7 @@ export interface InitialState {
   loading: boolean;
   posts: Posts[];
   likedList: number[];
+  status: 'idle' | 'loading' | 'failed' | undefined;
 }
 
 export interface Posts {

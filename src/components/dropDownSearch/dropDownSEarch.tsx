@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Image} from 'react-native';
 import {styleSheet} from './style';
 import {IMAGE_API} from '../../configs/configs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useSelector} from 'react-redux';
 import colors from '../../assets/colors/colors';
 import Loading from '../globalComponents/Loading/loading';
+import {useAppSelector} from '../../state-management/hooks';
 
 export default function DroppDownSearch({searchResult, navigation}) {
   //const [ref, setRef] = useState(null);
-  const likedList = useSelector(state => state.moviesSlice.likedList);
-  const loading = useSelector(state => state.searchSlice.loading);
+  const likedList = useAppSelector(state => state.moviesSlice.likedList);
+  const loading = useAppSelector(state => state.searchSlice.loading);
   const RenderItem = ({item}) => {
     return (
       <TouchableOpacity

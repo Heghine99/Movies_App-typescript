@@ -1,15 +1,26 @@
-import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import API_URL from './../../../configs/configs';
-export const getPosts = createAsyncThunk('posts/getPosts', async () => {
-  const response = await fetch(API_URL.API_URL);
-  const result = await response.json();
-  return result;
-});
+
+type AsyncThunkAction = {
+  pending: string;
+  fulfilled: string;
+  rejected: string;
+};
+
+export const getPosts = createAsyncThunk<AsyncThunkAction | void | {}>(
+  'posts/getPosts',
+  async () => {
+    const response = await fetch(API_URL.API_URL);
+    const result = await response.json();
+    return result;
+  },
+);
 import {InitialState} from './entities';
 const initialState: InitialState = {
   loading: false,
   posts: [],
   likedList: [],
+  status: 'idle',
 };
 
 const postSlice = createSlice({
@@ -21,7 +32,7 @@ const postSlice = createSlice({
     [getPosts.pending.toString()]: state => {
       state.loading = true;
     },
-    [getPosts.fulfilled.toString()]: (state, action: PayloadAction<any>) => {
+    [getPosts.fulfilled.toString()]: (state, action) => {
       state.posts = action.payload;
       state.loading = false;
     },

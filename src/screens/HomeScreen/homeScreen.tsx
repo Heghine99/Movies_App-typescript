@@ -26,18 +26,17 @@ import DropDownSearch from '../../components/dropDownSearch/dropDownSEarch';
 import {Categories} from './../../types/items';
 import API_URL from '../../configs/configs';
 
-interface Home {
+interface home {
   text: string;
   state: [];
 }
 
-const Home = () => {
-  console.log(API_URL.API_URL);
+const Home: FC<home> = () => {
   const {results} = useSelector((state: any) => state.moviesSlice.posts);
   const searchResults = useSelector(
     state => state.searchSlice.searchResult.results,
   );
-  const loading = useSelector(state => state.moviesSlice.loading);
+  // const loading = useSelector(state => state.moviesSlice.loading);
   const dispatch = useDispatch();
   // const screenIndex = navigation.getState().index;
   // const {mode} = useContext(DarkModeContext);

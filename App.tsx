@@ -1,15 +1,14 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-// import AntDesign from 'react-native-vector-icons/AntDesign';
-import Home from './src/screens/HomeScreen/homeScreen';
+import Navigation from './src/Navigation/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/state-management/store';
+import {DarkModeContextProvider} from './src/components/Context/context';
 const App = () => {
   return (
     <Provider store={store}>
-      <SafeAreaView>
-        <Home />
-      </SafeAreaView>
+      <DarkModeContextProvider>
+        <Navigation />
+      </DarkModeContextProvider>
     </Provider>
   );
 };

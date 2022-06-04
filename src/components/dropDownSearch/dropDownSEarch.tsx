@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Image} from 'react-native';
-import {styleSheet} from './style';
-import {IMAGE_API} from '../../configs/configs';
+import {styles} from './style';
+import IMAGE_API from '../../configs/configs';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../assets/colors/colors';
-import Loading from '../globalComponents/Loading/loading';
+import Loading from '../GlobalComponents/Loading/loading';
 import {useAppSelector} from '../../state-management/hooks';
 
 export default function DroppDownSearch({searchResult, navigation}) {
@@ -19,14 +19,14 @@ export default function DroppDownSearch({searchResult, navigation}) {
             item: item,
           })
         }
-        style={styleSheet.ItemView}>
+        style={styles.ItemView}>
         <Image
           source={{uri: IMAGE_API + item.backdrop_path}}
-          style={styleSheet.searchItemImage}
-          imageStyle={styleSheet.searchImage}
+          style={styles.searchItemImage}
+          imageStyle={styles.searchImage}
         />
-        <View style={styleSheet.inputItemTitle}>
-          <Text style={styleSheet.inputItemText}>{item.original_title}</Text>
+        <View style={styles.inputItemTitle}>
+          <Text style={styles.inputItemText}>{item.original_title}</Text>
           {likedList?.includes(item.id) && (
             <AntDesign
               name="heart"
@@ -58,7 +58,7 @@ export default function DroppDownSearch({searchResult, navigation}) {
   // };
 
   return (
-    <View style={styleSheet.modalHeight}>
+    <View style={styles.modalHeight}>
       {loading ? (
         <Loading size={35} />
       ) : (

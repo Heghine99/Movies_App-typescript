@@ -1,21 +1,25 @@
-import React, {useContext, useMemo} from 'react';
-import {TouchableOpacity, View, Text, Image, FlatList} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {useMemo} from 'react';
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {styles} from './style';
-import {IMAGE_API} from '../../../configs/configs';
+import URL from '../../../configs/configs';
 import colors from '../../../assets/colors/colors';
-// import {DarkModeContext} from '../../Context/context';
+import {useAppSelector, useAppDispatch} from '../../../state-management/hooks';
 
-const FlatListMovies = ({list: [], screenName: string}) => {
-  const {results} = useSelector(state => state.moviesSlice.posts);
+const FlatListMovies = ({navigation, list, deletList, screenName}) => {
+  const {results} = useAppSelector(state => state.moviesSlice.posts);
   const filterList = useMemo(() => {
     return results?.filter(item => list?.includes(item.id));
   }, [results, list]);
-  const dispatch = useDispatch();
-  //   const {mode} = useContext(DarkModeContext);
-  console.log(list);
-  console.log(result);
+  const dispatch = useAppDispatch();
+
 
   const renderItem = ({item}) => {
     return (
@@ -30,7 +34,7 @@ const FlatListMovies = ({list: [], screenName: string}) => {
         }>
         <View style={styles.moviesItem}>
           <Image
-            source={{uri: IMAGE_API + item.backdrop_path}}
+            source={{uri: URL.IMAGE_API + item.backdrop_path}}
             style={styles.itemImage}
             imageStyle={styles.moviesItemImageStyle}
           />
@@ -38,7 +42,7 @@ const FlatListMovies = ({list: [], screenName: string}) => {
           <View style={styles.moviesItembottomTitle}>
             <Text style={styles.moviesItembottomText}>Movie</Text>
             <Text style={styles.moviesItembottomDate}>{item.release_date}</Text>
-            {screenName ? (
+            {screenName ? null : (
               <TouchableOpacity
                 onPress={() => {
                   dispatch(deletList(item));
@@ -53,7 +57,7 @@ const FlatListMovies = ({list: [], screenName: string}) => {
                   }}
                 />
               </TouchableOpacity>
-            ) : null}
+            )}
           </View>
           {screenName ? (
             <View
@@ -72,16 +76,18 @@ const FlatListMovies = ({list: [], screenName: string}) => {
     );
   };
   return (
-    <View>
-      <FlatList
-        data={screenName ? results : filterList}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        horizontal={screenName ? true : false}
-        numColumns={screenName ? 0 : 2}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+    <SafeAreaView>
+      <View>
+        <FlatList
+          data={screenName ? results : filterList}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          horizontal={screenName ? true : false}
+          numColumns={screenName ? 0 : 2}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

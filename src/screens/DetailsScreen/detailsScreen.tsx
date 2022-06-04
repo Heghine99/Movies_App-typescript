@@ -6,54 +6,54 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-// import {useDispatch, useSelector} from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {styles} from './style';
 import colors from '../../assets/colors/colors';
-import IMAGE_API from './../../configs/configs';
-// import {
-//   addAndRemoveLikedListMovies,
-//   dislikeListMovies,
-//   addSaveList,
-//   addRatingList,
-//   ratingCount,
-// } from '../../state-management/moviesSlice';
-// import {Rating} from 'react-native-ratings';
-// import BackIcon from '../../components/globalComponents/BackIcon/BackIcon';
-// import {DarkModeContext} from '../../components/Context/context';
-// import {darkModeStyles} from '../../components/globalComponents/DarkModeStyle/profileDarkModeStyles';
+import URL from './../../configs/configs';
+import {
+  addAndRemoveLikedListMovies,
+  dislikeListMovies,
+  addSaveList,
+  addRatingList,
+  ratingCount,
+} from '../../state-management/reducers/moviesReducer/moviesSlice';
+import {Rating} from 'react-native-ratings';
+import BackIcon from '../../components/GlobalComponents/BackIcon/backIcon';
+import {DarkModeContext} from '../../components/Context/context';
+import {darkModeStyles} from '../../components/GlobalComponents/DarkModeStyle/style';
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
 
-const Details = () => {
-  // const {item} = route.params;
-  // const likedList = useSelector(state => state.moviesSlice.likedList);
-  // const disliked = useSelector(state => state.moviesSlice.disliked);
-  // const saveList = useSelector(state => state.moviesSlice.SaveList);
-  // const ratingcount = useSelector(state => state.moviesSlice.ratingCount);
-  // let ratingX;
-  // const dispatch = useDispatch();
-  // const {mode} = useContext(DarkModeContext);
+const Details = ({route, navigation}) => {
+  const {item} = route.params;
+  const likedList = useAppSelector(state => state.moviesSlice.likedList);
+  const disliked = useAppSelector(state => state.moviesSlice.disliked);
+  const saveList = useAppSelector(state => state.moviesSlice.SaveList);
+  const ratingcount = useAppSelector(state => state.moviesSlice.ratingCount);
+  let ratingX;
+  const dispatch = useAppDispatch();
+  const mode = useContext(DarkModeContext);
 
-  // ratingcount.map(i => {
-  //   if (i.id === item.id) {
-  //     ratingX = i.count;
-  //   }
-  // });
+  ratingcount.map(i => {
+    if (i.id === item.id) {
+      ratingX = i.count;
+    }
+  });
 
-  // const ratingCompleted = rating => {
-  //   dispatch(ratingCount({id: item.id, count: rating}));
+  const ratingCompleted = rating => {
+    dispatch(ratingCount({id: item.id, count: rating}));
 
-  //   if (rating > 3) {
-  //     dispatch(addRatingList(item));
-  //   }
-  // };
+    if (rating > 3) {
+      dispatch(addRatingList(item));
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={{uri: IMAGE_API + item.backdrop_path}}
+        source={{uri: URL.IMAGE_API + item.backdrop_path}}
         style={styles.backgroundImage}>
         <View style={styles.backIcon}>
           <BackIcon navigation={navigation} />
@@ -150,7 +150,7 @@ const Details = () => {
             <Text style={styles.descriptionText}>{item.overview}</Text>
           </View>
 
-          {/* <View style={styles.starCount}>
+          <View style={styles.starCount}>
             <Rating
               tintColor={mode ? 'white' : '#2D3035'}
               type="star"
@@ -160,7 +160,7 @@ const Details = () => {
               showRating
               onFinishRating={ratingCompleted}
             />
-          </View> */}
+          </View>
         </View>
       </View>
     </SafeAreaView>

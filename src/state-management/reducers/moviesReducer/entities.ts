@@ -2,6 +2,10 @@ export interface InitialState {
   loading: boolean;
   posts: Posts[];
   likedList: number[];
+  disliked: number[];
+  SaveList: number[];
+  ratings: number[];
+  ratingCount: number[];
   status: 'idle' | 'loading' | 'failed' | undefined;
 }
 

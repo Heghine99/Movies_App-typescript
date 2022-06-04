@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const styleSheet = StyleSheet.create({
+export const styles = StyleSheet.create({
   itemImage: {
     width: 160,
     height: 240,
